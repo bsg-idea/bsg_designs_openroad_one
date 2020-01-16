@@ -1,0 +1,49 @@
+# Note: The cad infrastructure repositories have a similar Makefile.setup. This
+# file let's you define these values in a single place and share it accross all
+# cad infrastructure repositories.
+
+#===============================================================================
+# CAD Tool Setup
+#===============================================================================
+
+# Pointer to the license server
+export LM_LICENSE_FILE :=
+
+# Path to dc_shell (confirmed working on vO-2018.06-SP5-5)
+export DC_SHELL :=
+
+# Path to fm_shell (confirmed working on vO-2018.06-SP5)
+export FM_SHELL :=
+
+#===============================================================================
+# PDK Setup
+#===============================================================================
+
+# Path to library db files 
+export TARGET_LIBRARY_FILES :=
+
+# Path to additional library db files (usually db files here are for hard
+# macros and GPIO cells -- things that don't really go through optimization
+# like standard cells).
+export ADDITIONAL_LINK_LIB_FILES :=
+
+# Regex for library cells to make as dont_use. Good candidates are hold fixing
+# cells, clock tree cells, tie cells, and other problematic cells.
+export LIBRARY_DONT_USE_CELLS :=
+
+#===============================================================================
+# DC/FM Setup
+#===============================================================================
+
+# Directory where synthesis will be executed and the results will reside
+export DC_RUN_DIR := build
+
+# Max number of CPU cores we will allow DC to use
+export DC_NUM_CORES := 4
+
+# RM+ flow selection (available options : <blank>|hc|rtm_exp|hplp)
+export DC_RMPLUS_FLOW :=
+
+# How much effort to put into flattening the design (available options : [0-3])
+export DC_FLATTEN_EFFORT := 0
+
