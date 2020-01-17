@@ -1,20 +1,15 @@
 [submodule "bsg_ac_io_complex_loopback/cad/synth"]
 	path = bsg_ac_io_complex_loopback/cad/synth
 	url = git@github.com:stdavids/bsg_dc_flat_gf12.git
-	branch = master
 [submodule "bsg_ac_io_complex_loopback/imports/board"]
 	path = bsg_ac_io_complex_loopback/imports/board
 	url = git@bitbucket.org:taylor-bsg/board.git
-	branch = snapshot_tapeout_2019_07_17
 [submodule "bsg_ac_io_complex_loopback/imports/basejump_stl"]
 	path = bsg_ac_io_complex_loopback/imports/basejump_stl
 	url = git@github.com:bespoke-silicon-group/basejump_stl.git
-	branch = tapeout_hb_fpu_rc0
 [submodule "bsg_ac_io_complex_loopback/imports/bsg_designs"]
 	path = bsg_ac_io_complex_loopback/imports/bsg_designs
 	url = git@bitbucket.org:taylor-bsg/bsg_designs.git
-	branch = snapshot_tapeout_2019_07_17
 [submodule "bsg_ac_io_complex_loopback/imports/bsg_packaging"]
 	path = bsg_ac_io_complex_loopback/imports/bsg_packaging
 	url = git@bitbucket.org:taylor-bsg/bsg_packaging.git
-	branch = snapshot_tapeout_2019_07_17
