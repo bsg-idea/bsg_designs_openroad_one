@@ -15,6 +15,10 @@ export DC_SHELL :=
 # Path to fm_shell (confirmed working on vO-2018.06-SP5)
 export FM_SHELL :=
 
+# Path to vcs (confirmed working on vL-2016.06-SP2-15)
+export VCS :=
+export VCS_HOME := $(realpath $(dir $(VCS))../)
+
 #===============================================================================
 # PDK Setup
 #===============================================================================
@@ -30,6 +34,9 @@ export ADDITIONAL_LINK_LIB_FILES :=
 # Regex for library cells to make as dont_use. Good candidates are hold fixing
 # cells, clock tree cells, tie cells, and other problematic cells.
 export LIBRARY_DONT_USE_CELLS :=
+
+# Path to cell verilog models (for simulation only)
+export GATE_VERILOG_FILES :=
 
 #===============================================================================
 # DC/FM Setup
