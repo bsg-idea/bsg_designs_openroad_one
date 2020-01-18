@@ -16,7 +16,7 @@ set io_master_clk_period_ps       1666.0 ;# 600MHz
 set io_master_clk_uncertainty_ps  20
 
 set bp_clk_name                   "bp_clk"
-set bp_clk_period_ps              600 ;# 1.6GHz
+set bp_clk_period_ps              1250 ;# 800MHz
 set bp_clk_uncertainty_ps         20
 
 set coh_clk_name                  "coh_clk"
