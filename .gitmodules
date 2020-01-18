@@ -22,3 +22,21 @@
 [submodule "bsg_ac_padring/imports/bsg_packaging"]
 	path = bsg_ac_padring/imports/bsg_packaging
 	url = git@bitbucket.org:taylor-bsg/bsg_packaging.git
+[submodule "bsg_ac_black_parrot_single_core_v0/cad/synth"]
+	path = bsg_ac_black_parrot_single_core_v0/cad/synth
+	url = git@github.com:stdavids/bsg_dc_flat_gf12.git
+[submodule "bsg_ac_black_parrot_single_core_v0/imports/basejump_stl"]
+	path = bsg_ac_black_parrot_single_core_v0/imports/basejump_stl
+	url = git@github.com:bespoke-silicon-group/basejump_stl.git
+[submodule "bsg_ac_black_parrot_single_core_v0/imports/bsg_packaging"]
+	path = bsg_ac_black_parrot_single_core_v0/imports/bsg_packaging
+	url = git@bitbucket.org:taylor-bsg/bsg_packaging.git
+[submodule "bsg_ac_black_parrot_single_core_v0/imports/bsg_designs"]
+	path = bsg_ac_black_parrot_single_core_v0/imports/bsg_designs
+	url = git@bitbucket.org:taylor-bsg/bsg_designs.git
+[submodule "bsg_ac_black_parrot_single_core_v0/imports/board"]
+	path = bsg_ac_black_parrot_single_core_v0/imports/board
+	url = git@bitbucket.org:taylor-bsg/board.git
+[submodule "bsg_ac_black_parrot_single_core_v0/imports/pre-alpha-release"]
+	path = bsg_ac_black_parrot_single_core_v0/imports/pre-alpha-release
+	url = git@github.com:black-parrot/pre-alpha-release.git
