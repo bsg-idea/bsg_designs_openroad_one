@@ -4,10 +4,12 @@ This repository contains designs working up to the OpenROAD One tapeout. Inside 
 design is a Makefile. Running `$make` will checkout all of the submodules for the
 given design. Below is a list of all the designs with a short desciption:
 
-| Name                       | Description                                            |
-|:---------------------------|:-------------------------------------------------------|
-| bsg_ac_padring             | Padring only                                           |
-| bsg_ac_io_complex_loopback | Padring with IO complex and a loopback testing client. |
+| Name                               | Description                                                          |
+|:-----------------------------------|:---------------------------------------------------------------------|
+| bsg_ac_padring                     | Padring only                                                         |
+| bsg_ac_io_complex_loopback         | Padring with IO complex and a loopback testing client                |
+| bsg_ac_black_parrot_single_core_v0 | Padring with IO complex and a black-parrot RISC-V processor (1-core) |
+| bsg_ac_black_parrot_quad_core_v0   | Padring with IO complex and a black-parrot RISC-V processor (4-core) |
 
 ## Using CAD Infrastructure
 
