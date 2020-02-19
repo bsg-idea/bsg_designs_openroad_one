@@ -294,7 +294,7 @@ import bsg_chip_pkg::*;
 
   //////////////////////////////////////////////////
   //
-  // BlackParrot Processor
+  // BSG Chip BlackParrot
   //
 
   bsg_ready_and_link_sif_s bp_prev_cmd_link_li, bp_prev_cmd_link_lo;
@@ -304,7 +304,6 @@ import bsg_chip_pkg::*;
   bsg_ready_and_link_sif_s bp_next_resp_link_li, bp_next_resp_link_lo;
 
   bsg_ready_and_link_sif_s dram_cmd_link_lo, dram_resp_link_li;
-
   bp_processor #(.bp_params_p(bp_cfg_gp))
     bp_processor
       (.core_clk_i  ( bp_clk_lo )
@@ -335,101 +334,107 @@ import bsg_chip_pkg::*;
       );
 
   `declare_bp_me_if(paddr_width_p, cce_block_width_p, lce_id_width_p, lce_assoc_p)
-
   bp_cce_mem_msg_s dram_cmd_li;
-  bp_cce_mem_msg_s dram_resp_lo;
   logic            dram_cmd_v_li, dram_cmd_ready_lo;
+  bp_cce_mem_msg_s dram_resp_lo;
   logic            dram_resp_v_lo, dram_resp_ready_li;
-
-  bp_me_cce_to_mem_link_client #(.bp_params_p(bp_params_p))
-    dram_link
-      (.clk_i(router_clk_lo)
-      ,.reset_i(router_reset_lo)
+  bp_me_cce_to_mem_link_client
+   #(.bp_params_p(bp_params_p)
+     ,.num_outstanding_req_p(mem_noc_max_credits_p)
+     ,.flit_width_p(mem_noc_flit_width_p)
+     ,.cord_width_p(mem_noc_cord_width_p)
+     ,.cid_width_p(mem_noc_cid_width_p)
+     ,.len_width_p(mem_noc_len_width_p)
+     )
+   dram_link
+    (.clk_i(router_clk_lo)
+     ,.reset_i(router_reset_lo)
   
-      ,.mem_cmd_o(dram_cmd_li)
-      ,.mem_cmd_v_o(dram_cmd_v_li)
-      ,.mem_cmd_yumi_i(dram_cmd_ready_lo & dram_cmd_v_li)
+     ,.mem_cmd_o(dram_cmd_li)
+     ,.mem_cmd_v_o(dram_cmd_v_li)
+     ,.mem_cmd_yumi_i(dram_cmd_ready_lo & dram_cmd_v_li)
   
-      ,.mem_resp_i(dram_resp_lo)
-      ,.mem_resp_v_i(dram_resp_v_lo)
-      ,.mem_resp_ready_o(dram_resp_ready_li)
+     ,.mem_resp_i(dram_resp_lo)
+     ,.mem_resp_v_i(dram_resp_v_lo)
+     ,.mem_resp_ready_o(dram_resp_ready_li)
   
-      ,.cmd_link_i(dram_cmd_link_lo)
-      ,.resp_link_o(dram_resp_link_li)
-      );
+     ,.cmd_link_i(dram_cmd_link_lo)
+     ,.resp_link_o(dram_resp_link_li)
+     );
 
   bsg_ready_and_link_sif_s [E:P] bypass_link_li, bypass_link_lo;
+  bp_me_cce_to_mem_link_master
+   #(.bp_params_p(bp_params_p)
+     ,.flit_width_p(mem_noc_flit_width_p)
+     ,.cord_width_p(mem_noc_cord_width_p)
+     ,.cid_width_p(mem_noc_cid_width_p)
+     ,.len_width_p(mem_noc_len_width_p)
+     )
+   bypass_link
+    (.clk_i(router_clk_lo)
+     ,.reset_i(router_reset_lo)
 
-  bp_me_cce_to_mem_link_master #(.bp_params_p(bp_params_p))
-    bypass_link
-      (.clk_i(router_clk_lo)
-      ,.reset_i(router_reset_lo)
+     ,.mem_cmd_i(dram_cmd_li)
+     ,.mem_cmd_v_i(dram_cmd_v_li)
+     ,.mem_cmd_ready_o(dram_cmd_ready_lo)
 
-      ,.mem_cmd_i(dram_cmd_li)
-      ,.mem_cmd_v_i(dram_cmd_v_li)
-      ,.mem_cmd_ready_o(dram_cmd_ready_lo)
+     ,.mem_resp_o(dram_resp_lo)
+     ,.mem_resp_v_o(dram_resp_v_lo)
+     ,.mem_resp_yumi_i(dram_resp_ready_li & dram_resp_v_lo)
 
-      ,.mem_resp_o(dram_resp_lo)
-      ,.mem_resp_v_o(dram_resp_v_lo)
-      ,.mem_resp_yumi_i(dram_resp_ready_li & dram_resp_v_lo)
+     ,.my_cord_i(core_did_lo[0+:io_noc_did_width_p])
+     ,.my_cid_i('0)
+     ,.dst_cord_i(host_did_lo[0+:io_noc_did_width_p])
+     ,.dst_cid_i('0)
 
-      ,.my_cord_i(core_did_lo[0+:io_noc_did_width_p])
-      ,.my_cid_i('0)
-      ,.dst_cord_i(host_did_lo[0+:io_noc_did_width_p])
-      ,.dst_cid_i('0)
-
-      ,.cmd_link_o(bypass_link_li[P])
-      ,.resp_link_i(bypass_link_lo[P])
-      );
-
-  //////////////////////////////////////////////////
-  //
-  // Bypass Wormhole Router + Repeaters
-  //
+     ,.cmd_link_o(bypass_link_li[P])
+     ,.resp_link_i(bypass_link_lo[P])
+     );
 
   bsg_wormhole_router #(.flit_width_p(mem_noc_flit_width_p)
-                       ,.dims_p(mem_noc_dims_p)
-                       ,.cord_dims_p(mem_noc_cord_dims_p)
-                       ,.cord_markers_pos_p(mem_noc_cord_markers_pos_p)
-                       ,.len_width_p(mem_noc_len_width_p)
-                       ,.reverse_order_p(1)
-                       ,.routing_matrix_p(StrictX)
-                       )
-    bypass_router
-      (.clk_i(router_clk_lo)
-      ,.reset_i(router_reset_lo)
+                        ,.dims_p(mem_noc_dims_p)
+                        ,.cord_dims_p(mem_noc_cord_dims_p)
+                        ,.cord_markers_pos_p(mem_noc_cord_markers_pos_p)
+                        ,.len_width_p(mem_noc_len_width_p)
+                        ,.reverse_order_p(1)
+                        ,.routing_matrix_p(StrictX)
+                        ) bypass_router
+    (.clk_i(router_clk_lo)
+    ,.reset_i(router_reset_lo)
 
-      ,.my_cord_i(router_did_lo[0+:io_noc_did_width_p])
+    ,.my_cord_i(router_did_lo[0+:io_noc_did_width_p])
 
-      ,.link_i(bypass_link_li)
-      ,.link_o(bypass_link_lo)
-      );
+    ,.link_i(bypass_link_li)
+    ,.link_o(bypass_link_lo)
+    );
 
   for (i = 0; i < 3; i++)
     begin : repeater
-      bsg_noc_repeater_node #(.width_p(ct_width_gp))
-        prev_repeater
-          (.clk_i(router_clk_lo)
-          ,.reset_i(router_reset_lo)
+      bsg_noc_repeater_node
+       #(.width_p(ct_width_gp))
+       prev_bypass_repeater
+        (.clk_i(router_clk_lo)
+         ,.reset_i(router_reset_lo)
 
-          ,.side_A_links_i(prev_router_links_li[i])
-          ,.side_A_links_o(prev_router_links_lo[i])
+         ,.side_A_links_i(prev_router_links_li[i])
+         ,.side_A_links_o(prev_router_links_lo[i])
 
-          ,.side_B_links_i(repeated_prev_router_links_lo[i])
-          ,.side_B_links_o(repeated_prev_router_links_li[i])
-          );
+         ,.side_B_links_i(repeated_prev_router_links_lo[i])
+         ,.side_B_links_o(repeated_prev_router_links_li[i])
+         );
 
-      bsg_noc_repeater_node #(.width_p(ct_width_gp))
-        next_repeater
-          (.clk_i(router_clk_lo)
-          ,.reset_i(router_reset_lo)
+      bsg_noc_repeater_node
+       #(.width_p(ct_width_gp))
+       next_bypass_repeater
+        (.clk_i(router_clk_lo)
+         ,.reset_i(router_reset_lo)
 
-          ,.side_A_links_i(next_router_links_li[i])
-          ,.side_A_links_o(next_router_links_lo[i])
+         ,.side_A_links_i(next_router_links_li[i])
+         ,.side_A_links_o(next_router_links_lo[i])
 
-          ,.side_B_links_i(repeated_next_router_links_lo[i])
-          ,.side_B_links_o(repeated_next_router_links_li[i])
-          );
+         ,.side_B_links_i(repeated_next_router_links_lo[i])
+         ,.side_B_links_o(repeated_next_router_links_li[i])
+         );
     end
 
   assign prev_router_links_li[0] = bp_prev_cmd_link_lo;
