@@ -47,9 +47,9 @@ set SVERILOG_SOURCE_FILES [join "
   $basejump_stl_dir/bsg_async/bsg_launch_sync_sync.v
   $basejump_stl_dir/bsg_async/bsg_sync_sync.v
   $basejump_stl_dir/bsg_cache/bsg_cache.v
+  $basejump_stl_dir/bsg_cache/bsg_cache_decode.v
   $basejump_stl_dir/bsg_cache/bsg_cache_dma.v
   $basejump_stl_dir/bsg_cache/bsg_cache_miss.v
-  $basejump_stl_dir/bsg_cache/bsg_cache_pkt_decode.v
   $basejump_stl_dir/bsg_cache/bsg_cache_sbuf.v
   $basejump_stl_dir/bsg_cache/bsg_cache_sbuf_queue.v
   $basejump_stl_dir/bsg_dataflow/bsg_1_to_n_tagged.v
@@ -107,6 +107,7 @@ set SVERILOG_SOURCE_FILES [join "
   $basejump_stl_dir/bsg_misc/bsg_counter_clear_up.v
   $basejump_stl_dir/bsg_misc/bsg_counter_clock_downsample.v
   $basejump_stl_dir/bsg_misc/bsg_counter_set_down.v
+  $basejump_stl_dir/bsg_misc/bsg_counter_set_en.v
   $basejump_stl_dir/bsg_misc/bsg_counter_up_down.v
   $basejump_stl_dir/bsg_misc/bsg_counter_up_down_variable.v
   $basejump_stl_dir/bsg_misc/bsg_crossbar_o_by_i.v
@@ -188,7 +189,6 @@ set SVERILOG_SOURCE_FILES [join "
   $bp_common_dir/src/v/bp_pma.v
   $bp_common_dir/src/v/bp_tlb.v
   $bp_common_dir/src/v/bp_tlb_replacement.v
-  $bp_common_dir/src/v/bsg_fifo_1r1w_fence.v
   $bp_common_dir/src/v/bsg_fifo_1r1w_rolly.v
   $bp_fe_dir/src/v/bp_fe_bht.v
   $bp_fe_dir/src/v/bp_fe_btb.v
@@ -221,15 +221,11 @@ set SVERILOG_SOURCE_FILES [join "
   $bp_me_dir/src/v/cce/bp_io_cce.v
   $bp_me_dir/src/v/wormhole/bp_me_addr_to_cce_id.v
   $bp_me_dir/src/v/wormhole/bp_me_cce_id_to_cord.v
-  $bp_me_dir/src/v/wormhole/bp_me_cce_to_io_link_bidir.v
-  $bp_me_dir/src/v/wormhole/bp_me_cce_to_io_link_client.v
-  $bp_me_dir/src/v/wormhole/bp_me_cce_to_io_link_master.v
+  $bp_me_dir/src/v/wormhole/bp_me_cce_to_mem_link_bidir.v
   $bp_me_dir/src/v/wormhole/bp_me_cce_to_mem_link_client.v
   $bp_me_dir/src/v/wormhole/bp_me_cce_to_mem_link_master.v
   $bp_me_dir/src/v/wormhole/bp_me_cord_to_id.v
   $bp_me_dir/src/v/wormhole/bp_me_lce_id_to_cord.v
-  $bp_me_dir/src/v/wormhole/bp_me_wormhole_packet_encode_io_cmd.v
-  $bp_me_dir/src/v/wormhole/bp_me_wormhole_packet_encode_io_resp.v
   $bp_me_dir/src/v/wormhole/bp_me_wormhole_packet_encode_lce_cmd.v
   $bp_me_dir/src/v/wormhole/bp_me_wormhole_packet_encode_lce_req.v
   $bp_me_dir/src/v/wormhole/bp_me_wormhole_packet_encode_lce_resp.v
